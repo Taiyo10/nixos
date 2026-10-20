@@ -48,6 +48,7 @@ in
     obsidian
     thunar
     opencode
+    vscode
     rebuild
   ];
 
