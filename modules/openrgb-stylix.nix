@@ -2,12 +2,22 @@
 
 let
   color = config.lib.stylix.colors.base0D;
+
+  applyRgb = pkgs.writeShellScriptBin "apply-stylix-rgb" ''
+    ${pkgs.openrgb}/bin/openrgb \
+      --mode direct \
+      --color ${color} || true
+  '';
 in
 {
+  # Apply immediately whenever Home Manager activates/rebuilds
   home.activation.openrgbStylix =
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ${pkgs.openrgb}/bin/openrgb \
-        --mode direct \
-        --color ${color} || true
+      ${applyRgb}/bin/apply-stylix-rgb
     '';
+
+  # Makes `apply-stylix-rgb` available as a normal command
+  home.packages = [
+    applyRgb
+  ];
 }

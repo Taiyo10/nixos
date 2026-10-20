@@ -11,6 +11,7 @@
       inputs.noctalia.nixosModules.default
       #inputs.xremap.nixosModules.default
       ./modules/stylix.nix
+      ./modules/qidi-studio.nix
     ];
 
   # Bootloader.
@@ -39,21 +40,20 @@
 
   # Enable auto hyprland
   services.greetd = {
-    enable = true;
-
+   enable = true;
+  
     settings = {
-     initial_session = {
-       command = "start-hyprland";
+      initial_session = {
+        command = "uwsm start hyprland-uwsm.desktop";
         user = "teo";
       };
-     
-      default_session = {
-       command = "start-hyprland";
+  
+     default_session = {
+        command = "uwsm start hyprland-uwsm.desktop";
         user = "teo";
       };
-   };
+    };
   };
-
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -135,6 +135,15 @@
     powerManagement.enable = true;
   
     open = true;
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+
+      amdgpuBusId = "PCI:12@0:0:0";
+      nvidiaBusId = "PCI:1@0:0:0";
+    };
   };
 
   services.hardware.openrgb.enable = true;
@@ -152,7 +161,10 @@
   nixpkgs.config.allowUnfree = true;
 
   #services.displayManager.defaultSession = "hyperland";
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget

@@ -4,7 +4,7 @@
   stylix = {
     enable = true;
     polarity = "dark";
-    image = ../wallpapers/luffy.jpg;
+    image = ../wallpapers/JapanNasa.png;
   
     cursor = {
       package = pkgs.bibata-cursors;
