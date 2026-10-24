@@ -122,6 +122,8 @@
 
   programs.gamemode.enable = true;
 
+  programs.gpu-screen-recorder.enable = true;
+
 
   programs.noctalia = {
     enable = true;

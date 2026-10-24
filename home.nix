@@ -44,6 +44,7 @@ in
   };
 
   home.packages = with pkgs; [
+    gpu-screen-recorder-gtk
     prismlauncher
     obsidian
     thunar
