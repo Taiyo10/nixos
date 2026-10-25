@@ -29,16 +29,17 @@ let
       region=$(slurp -f '%wx%h+%x+%y') || exit 0
       videos_dir="$HOME/Videos"
       mkdir -p "$videos_dir"
-      recording="$videos_dir/Recording_$(date '+%Y-%m-%d_%H-%M-%S').mkv"
+      recording="$videos_dir/Recording_$(date '+%Y-%m-%d_%H-%M-%S').mp4"
 
       gpu-screen-recorder \
         -w region \
         -region "$region" \
         -f 60 \
         -a default_output \
+        -ac aac \
         -k h264 \
         -q very_high \
-        -c mkv \
+        -c mp4 \
         -o "$recording" > "$log_file" 2>&1 &
       recorder_pid=$!
       printf '%s\n' "$recorder_pid" > "$pid_file"
