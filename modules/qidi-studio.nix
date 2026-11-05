@@ -3,11 +3,11 @@
 let
   qidiStudio = pkgs.appimageTools.wrapType2 {
     pname = "qidi-studio";
-    version = "2.07.02.60";
+    version = "2.07.02.73";
 
     src = pkgs.fetchurl {
-      url = "https://github.com/QIDITECH/QIDIStudio/releases/download/v2.07.02.60/QIDIStudio_v02.07.02.60_Ubuntu24.AppImage";
-      hash = "sha256-1H0rLI3V8W1I+KIbolQg/Wat9WsACMy1RIdyU0s8seg=";
+      url = "https://github.com/QIDITECH/QIDIStudio/releases/download/v2.07.02.73/QIDIStudio_v02.07.02.73_Ubuntu24.AppImage";
+      hash = "sha256-sPOdXxGjzK4NNTwZzhfkgix+GL60wEMqaZRzfBiidvg=";
     };
 
     extraPkgs = pkgs: with pkgs; [
