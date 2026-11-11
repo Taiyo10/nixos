@@ -157,6 +157,23 @@
   #};
 
 
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
+  
+  networking.firewall.trustedInterfaces = [
+    "tailscale0"
+  ];
+  
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = false;
+  };
+
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   nix.settings.extra-substituters = [
