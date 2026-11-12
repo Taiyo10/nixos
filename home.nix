@@ -1,6 +1,19 @@
 { config, pkgs, inputs, ... }:
 
 let
+  fixedCodex = pkgs.codex.overrideAttrs (old: {
+    buildInputs = old.buildInputs ++ (with pkgs; [
+      aws-lc
+      oniguruma
+      sqlite
+      zstd
+    ]);
+  });
+
+  t3codeWithFixedCodex = pkgs.t3code.override {
+    codex = fixedCodex;
+  };
+
   recordRegion = pkgs.writeShellApplication {
     name = "record-region";
     runtimeInputs = with pkgs; [
@@ -104,6 +117,7 @@ in
     prismlauncher
     obsidian
     thunar
+    t3codeWithFixedCodex
     opencode
     vscode
     recordRegion
