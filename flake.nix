@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    # Match the nixpkgs revision pinned by ~/robotics/flake.lock so Qt apps
+    # from that shell can load ABI-compatible Stylix theme plugins.
+    robotics-nixpkgs.url =
+      "github:NixOS/nixpkgs/e72e4f299401a3689d4b3d5fc6496b11db7064eb";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

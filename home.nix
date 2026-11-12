@@ -1,6 +1,15 @@
 { config, pkgs, inputs, ... }:
 
 let
+  roboticsPkgs = import inputs.robotics-nixpkgs {
+    system = pkgs.stdenv.hostPlatform.system;
+  };
+
+  roboticsQtThemePlugins = [
+    roboticsPkgs.qt6Packages.qt6ct
+    roboticsPkgs.qt6Packages.qtstyleplugin-kvantum
+  ];
+
   fixedCodex = pkgs.codex.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ (with pkgs; [
       aws-lc
@@ -106,6 +115,13 @@ in
   home.homeDirectory = "/home/teo";
 
   home.stateVersion = "26.05";
+
+  # RViz comes from nix-ros-overlay's separately pinned Qt. Host Qt theme
+  # plugins can become ABI-incompatible after a nixpkgs update, so expose
+  # matching qt6ct/Kvantum plugins before the host profile's plugin paths.
+  home.sessionSearchVariables.QT_PLUGIN_PATH = pkgs.lib.mkBefore (
+    map (package: "${package}/lib/qt-6/plugins") roboticsQtThemePlugins
+  );
 
   programs.home-manager.enable = true;
 
