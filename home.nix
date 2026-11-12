@@ -118,6 +118,7 @@ in
     obsidian
     thunar
     t3codeWithFixedCodex
+    fixedCodex
     opencode
     vscode
     recordRegion
