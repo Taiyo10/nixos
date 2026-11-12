@@ -119,6 +119,7 @@ in
     thunar
     t3codeWithFixedCodex
     fixedCodex
+    gh
     opencode
     vscode
     recordRegion
