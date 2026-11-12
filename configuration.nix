@@ -11,6 +11,7 @@
       inputs.noctalia.nixosModules.default
       #inputs.xremap.nixosModules.default
       ./modules/stylix.nix
+      ./modules/openrgb-resume.nix
       ./modules/qidi-studio.nix
     ];
 
