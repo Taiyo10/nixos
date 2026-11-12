@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   roboticsPkgs = import inputs.robotics-nixpkgs {
@@ -9,6 +9,16 @@ let
     roboticsPkgs.qt6Packages.qt6ct
     roboticsPkgs.qt6Packages.qtstyleplugin-kvantum
   ];
+
+  roboticsQtPluginPaths =
+    map (package: "${package}/lib/qt-6/plugins") roboticsQtThemePlugins;
+
+  qtPluginPaths = roboticsQtPluginPaths ++ [
+    "${config.home.profileDirectory}/${pkgs.qt5.qtbase.qtPluginPrefix}"
+    "${config.home.profileDirectory}/${pkgs.qt6.qtbase.qtPluginPrefix}"
+  ];
+
+  qtPluginPath = lib.concatStringsSep ":" qtPluginPaths;
 
   fixedCodex = pkgs.codex.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ (with pkgs; [
@@ -154,9 +164,22 @@ in
   # RViz comes from nix-ros-overlay's separately pinned Qt. Host Qt theme
   # plugins can become ABI-incompatible after a nixpkgs update, so expose
   # matching qt6ct/Kvantum plugins before the host profile's plugin paths.
-  home.sessionSearchVariables.QT_PLUGIN_PATH = pkgs.lib.mkBefore (
-    map (package: "${package}/lib/qt-6/plugins") roboticsQtThemePlugins
+  home.sessionSearchVariables.QT_PLUGIN_PATH = lib.mkBefore (
+    roboticsQtPluginPaths
   );
+
+  # UWSM and Hyprland-launched applications do not inherit shell profile
+  # variables. Keep the persistent environment.d value in sync and refresh
+  # both long-lived launch environments whenever Home Manager activates.
+  systemd.user.sessionVariables.QT_PLUGIN_PATH = lib.mkForce qtPluginPath;
+
+  home.activation.refreshQtPluginPath =
+    lib.hm.dag.entryAfter [ "reloadSystemd" ] ''
+      ${pkgs.systemd}/bin/systemctl --user set-environment \
+        QT_PLUGIN_PATH=${lib.escapeShellArg qtPluginPath} || true
+      ${pkgs.hyprland}/bin/hyprctl eval \
+        ${lib.escapeShellArg ''hl.env("QT_PLUGIN_PATH", ${builtins.toJSON qtPluginPath})''} || true
+    '';
 
   programs.home-manager.enable = true;
 
