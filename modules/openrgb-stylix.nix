@@ -2,19 +2,11 @@
 
 let
   color = config.lib.stylix.colors.base0D;
-  devices = [
-    "ENE DRAM"
-    "ASUS PRIME B650M-A WIFI II"
-  ];
 
   applyRgb = pkgs.writeShellScriptBin "apply-stylix-rgb" ''
-    for device in ${lib.escapeShellArgs devices}; do
-      ${pkgs.openrgb}/bin/openrgb \
-        --nodetect \
-        --device "$device" \
-        --mode direct \
-        --color ${color} || true
-    done
+    ${pkgs.openrgb}/bin/openrgb \
+      --nodetect \
+      --color ${color} || true
   '';
 in
 {
