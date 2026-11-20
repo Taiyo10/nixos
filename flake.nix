@@ -34,10 +34,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #xremap = {
-    #  url = "github:xremap/nix-flake";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
+    jobbot = {
+      url = "path:/home/teo/.t3/projects/j-bautomation";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, stylix, ... }: {

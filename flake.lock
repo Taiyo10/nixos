@@ -160,6 +160,23 @@
         "type": "github"
       }
     },
+    "jobbot": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795205918,
+        "narHash": "sha256-6/ioc6QN7jKn6IV98E0smxYLH1XBR6y09gG/U3arzTM=",
+        "path": "/home/teo/.t3/projects/j-bautomation",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/teo/.t3/projects/j-bautomation",
+        "type": "path"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1794042290,
@@ -240,6 +257,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "jobbot": "jobbot",
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
         "robotics-nixpkgs": "robotics-nixpkgs",

@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.noctalia.nixosModules.default
-      #inputs.xremap.nixosModules.default
+      inputs.jobbot.nixosModules.default
       ./modules/stylix.nix
       ./modules/openrgb-resume.nix
       ./modules/qidi-studio.nix
@@ -151,12 +151,23 @@
 
   services.hardware.openrgb.enable = true;
 
-  #services.xremap = {
-  #  enable = true;
-  #  withWlroots = true;
-  #  userName = "Teo";
-  #};
+  services.jobbot = {
+    enable = true;
+  
+    configFile =
+      inputs.jobbot.outPath + "/config/profile.toml";
 
+    onCalendar = [
+      "*-*-* 08:00:00"
+      "*-*-* 20:00:00"
+    ];
+
+    dashboard = {
+      enable = true;
+      host = "127.0.0.1";
+      port = 8765;
+    };
+  };
 
   services.tailscale = {
     enable = true;
