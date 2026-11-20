@@ -168,16 +168,6 @@
       port = 8765;
     };
 
-    localEvaluation = {
-      enable = true;
-      model = "qwen2.5:7b-instruct-q4_K_M";
-      onCalendar = [
-        "*-*-* 09:00:00"
-        "*-*-* 21:00:00"
-      ];
-      cpuQuota = "100%";
-      memoryMax = "12G";
-    };
   };
 
   services.tailscale = {
